@@ -1,0 +1,45 @@
+cflags = -Wall -Wextra -O2
+libs = -lm
+
+deps:
+    git --version: 2.53.0;
+    gcc --version: 15.2.1;
+
+rules:
+    cc(in..., f...):
+    {
+	gcc -c $in -o #tgt $f -MD -MF #tgt.d $cflags;
+    };
+    
+    link(in..., l...):
+    {
+	gcc -o #tgt $in $l;
+    };
+
+    clean():
+    {
+	rm -rf *.o;
+    }
+
+    !hash():
+    {
+	git rev-parse HEAD
+    };
+
+run:
+    !main.o: cc(
+	main.c,
+	-DGIT_HASH=$hash()
+	);
+
+    bar.o: cc(
+	bar.c
+	);
+    
+    foo.o: cc(
+	foo.c
+	);
+
+    bin: link(main.o foo.o bar.o, -lm);
+
+    clean();
