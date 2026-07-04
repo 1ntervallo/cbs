@@ -1,6 +1,6 @@
 local action = ...
 
-local platform = "gnu-linux" -- "gnu-linux" / "windows" / "mac"
+local platform = "" -- "gnu-linux" / "windows" / "mac"
 local flags = "-C opt-level=2 -A dead_code" 
 local libs = ""
 
@@ -30,8 +30,8 @@ if platform == "gnu-linux" then
         "rule rustc",
         "  command = rustc $flags --emit=link,dep-info=$out.d $in -o $out",
         "  depfile = $out.d",
-        "  deps = gcc", -- Tells ninja to parse the depfile in Makefile format
-        "  description = RUSTC $out",
+        "  deps = gcc",
+	"  description = RUSTC $out",
     }
 
     local pipe = popen("find src -type f -name 'main.rs'")
