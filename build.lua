@@ -1,6 +1,6 @@
 local action = ...
 
-local platform = "" -- "gnu-linux" / "windows" / "mac"
+local platform = "linux" -- "linux" / "windows" / "mac"
 local flags = "-C opt-level=2 -A dead_code" 
 local libs = ""
 
@@ -19,7 +19,7 @@ if action == "test" then
     flags = flags .. " --test"
 end
 
-if platform == "gnu-linux" then
+if platform == "linux" then
     exec("mkdir -p bin")
     
     local bf, err = open("build.ninja", "w")
