@@ -19,6 +19,8 @@ if action == "test" then
     flags = flags .. " --test"
 end
 
+print(fmt("Using platform %s to build cbs", platform))
+
 if platform == "linux" then
     exec("mkdir -p bin")
     
